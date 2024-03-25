@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link th:href="@{/signup.css}" rel="stylesheet" />
+</head>
+<body style="background-color: #FEFCE7;">
+<div class="box">
+    <h1>Sign Up</h1><br>
+
+    <form th:action="@{/signup/submit}" th:object="${userEntity}" method="post">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="uname" th:field="*{username}" required>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" id="email" th:field="*{email}" required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="psw" th:field="*{password}" required>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <form th:action="@{/}" method="get">
+        <button type="submit">Back</button>
+    </form>
+
+    <h3 th:text="${invalidSignUp}"></h3>
+</div>
+</body>
+</html>

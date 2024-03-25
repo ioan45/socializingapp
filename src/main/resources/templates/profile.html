@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link th:href="@{/profile.css}" rel="stylesheet" />
+</head>
+<body style="background-color: #FEFCE7;">
+    <div class="box">
+        <h1>My Profile</h1><br>
+        <form th:action="@{signout}" method="post">
+            <button type="submit">Sign Out</button>
+        </form>
+    </div>
+</body>
+</html>

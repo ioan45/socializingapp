@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+  <link th:href="@{/signin.css}" rel="stylesheet" />
+</head>
+<body style="background-color: #FEFCE7;">
+<div class="box">
+  <h1>Sign In</h1><br>
+
+  <form th:action="@{signin}" method="post">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="uname" name="username" required>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" name="password" required>
+    <button type="submit">Sign In</button>
+  </form>
+
+  <form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+  </form>
+
+  <h3 th:text="${invalidSignIn}"></h3>
+</div>
+</body>
+</html>
