@@ -33,4 +33,14 @@ public class Post {
     private String content;
     private Timestamp timestamp;
     private int likesCount;
+
+    public void addLike(User user) {
+        likes.add(user);
+        user.getPostsLiked().add(this);
+    }
+
+    public void removeLike(User user) {
+        likes.remove(user);
+        user.getPostsLiked().remove(this);
+    }
 }
