@@ -2,6 +2,8 @@ package com.example.socializingapp.controllers;
 
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.UserService;
+import com.sun.tools.jconsole.JConsoleContext;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,14 +23,26 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String homePage(
-            Model model
-    ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken))
-            return "redirect:/profile";
+    private Integer getUserId(@NotNull Authentication authentication) {
+        String username = authentication.getName();
+        System.out.println(username);
+        User user = userService.getUserByUsername(username);
+        if (user != null) {
+            System.out.println(user.getUserId());
+            return user.getUserId();
+        }
+        return null;
+    }
 
+    @GetMapping("/")
+    public String homePage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Integer userId = getUserId(authentication);
+            if (userId != null) {
+                return "redirect:/profile/" + userId;
+            }
+        }
         return "home";
     }
 
@@ -38,22 +52,27 @@ public class LoginController {
             Model model
     ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken))
-            return "redirect:/profile";
-
-        if (error != null)
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Integer userId = getUserId(authentication);
+            if (userId != null) {
+                return "redirect:/profile/" + userId;
+            }
+        }
+        if (error != null) {
             model.addAttribute("invalidSignIn", "Invalid username or password!");
+        }
         return "signin";
     }
 
     @GetMapping("/signup")
-    public String signUpPage(
-            Model model
-    ) {
+    public String signUpPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken))
-            return "redirect:/profile";
-
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Integer userId = getUserId(authentication);
+            if (userId != null) {
+                return "redirect:/profile/" + userId;
+            }
+        }
         model.addAttribute("userEntity", new User());
         return "signup";
     }
@@ -61,17 +80,21 @@ public class LoginController {
     @PostMapping("/signup/submit")
     public String signUpSubmit(@ModelAttribute("userEntity") User formUser, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken))
-            return "redirect:/profile";
-
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Integer userId = getUserId(authentication);
+            if (userId != null) {
+                return "redirect:/profile/" + userId;
+            }
+        }
         boolean succeeded = userService.signUpUser(formUser);
-        if (succeeded)
+        if (succeeded) {
             return "redirect:/";
-        else {
+        } else {
             model.addAttribute("invalidSignUp", "Username already exists!");
             return "signup";
         }
     }
+
 
     @GetMapping("/profile")
     public String signOut(
