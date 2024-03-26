@@ -9,21 +9,19 @@
 <div class="container">
     <div class="profile-box">
         <h1>My Profile</h1>
-        <div th:if="${profile != null}" class="profile-info">
-            <p><strong>User ID:</strong> <span th:text="${profile.user.userId}"></span></p>
+        <div class="profile-info">
+            <p><strong>Username:</strong> <span th:text="${profile.user.username}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${profile.user.email}"></span></p>
             <p><strong>Description:</strong> <span th:text="${profile.description}"></span></p>
             <p><strong>Website:</strong> <span th:text="${profile.website}"></span></p>
             <p><strong>Birthday:</strong> <span th:text="${profile.birthday}"></span></p>
             <p><strong>Creation Date:</strong> <span th:text="${profile.creationDate}"></span></p>
         </div>
-        <div th:if="${profile == null}">
-            <p>No profile found.</p>
-        </div>
         <form th:action="@{/signout}" method="post">
             <button type="submit">Sign Out</button>
         </form>
     </div>
-    <div th:if="${profile != null}" class="navigation">
+    <div class="navigation">
         <a th:href="@{/friends}"><button class="nav-button">Friend List</button></a>
         <a th:href="@{/myposts}"><button class="nav-button">My Posts</button></a>
         <a th:href="@{/friendsposts}"><button class="nav-button">Friends Posts</button></a>

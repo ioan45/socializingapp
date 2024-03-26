@@ -23,25 +23,13 @@ public class LoginController {
         this.userService = userService;
     }
 
-    private Integer getUserId(@NotNull Authentication authentication) {
-        String username = authentication.getName();
-        System.out.println(username);
-        User user = userService.getUserByUsername(username);
-        if (user != null) {
-            System.out.println(user.getUserId());
-            return user.getUserId();
-        }
-        return null;
-    }
+
 
     @GetMapping("/")
     public String homePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            Integer userId = getUserId(authentication);
-            if (userId != null) {
-                return "redirect:/profile/" + userId;
-            }
+            return "redirect:/profile";
         }
         return "home";
     }
@@ -53,10 +41,7 @@ public class LoginController {
     ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            Integer userId = getUserId(authentication);
-            if (userId != null) {
-                return "redirect:/profile/" + userId;
-            }
+                return "redirect:/profile";
         }
         if (error != null) {
             model.addAttribute("invalidSignIn", "Invalid username or password!");
@@ -68,10 +53,7 @@ public class LoginController {
     public String signUpPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            Integer userId = getUserId(authentication);
-            if (userId != null) {
-                return "redirect:/profile/" + userId;
-            }
+            return "redirect:/profile";
         }
         model.addAttribute("userEntity", new User());
         return "signup";
@@ -81,10 +63,8 @@ public class LoginController {
     public String signUpSubmit(@ModelAttribute("userEntity") User formUser, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            Integer userId = getUserId(authentication);
-            if (userId != null) {
-                return "redirect:/profile/" + userId;
-            }
+            return "redirect:/profile";
+
         }
         boolean succeeded = userService.signUpUser(formUser);
         if (succeeded) {
@@ -93,13 +73,5 @@ public class LoginController {
             model.addAttribute("invalidSignUp", "Username already exists!");
             return "signup";
         }
-    }
-
-
-    @GetMapping("/profile")
-    public String signOut(
-            Model model
-    ) {
-        return "profile";
     }
 }
