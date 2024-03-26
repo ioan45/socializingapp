@@ -47,6 +47,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> postsLiked;
 
+    @Column(unique = true)
     private String username;
     private String email;
     private String password;
