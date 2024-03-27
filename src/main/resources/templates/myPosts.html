@@ -4,17 +4,27 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Social Media Posts</title>
-    <link rel="stylesheet" th:href="@{posts.css}"/>
+    <link rel="stylesheet" th:href="@{/posts.css}"/>
 </head>
 <body>
 
-<h1>Friends Posts</h1>
+<h1>My Posts</h1>
 
-<div class="container">
-    <div th:each="post : ${friendsPosts}" class="post" th:id="${post.postId}">
+<div class="container" id="post-form-container">
+    <div class = "new-post-form">
+        <textarea class="post-textarea" rows="5" cols="70"></textarea>
+        <button class="post-button">POST</button>
+    </div>
+</div>
+
+<div class="container" id="post-list-container">
+    <div th:each="post : ${myPosts}" class="post" th:id="${post.postId}">
         <div class="post-header">
             <h3 th:text="${post.owner}"></h3>
-            <span th:text="'   [' + ${post.creationDate} + '] '"></span>
+            <div>
+                <span th:text="'   [' + ${post.creationDate} + '] '"></span>
+                <button class="delete-btn">Delete</button>
+            </div>
         </div>
         <div class="post-content">
             <p th:text="${post.content}"></p>
@@ -38,7 +48,7 @@
     <button class="back-button" type="submit">Back</button>
 </form>
 
-<script th:src="@{posts.js}"></script>
+<script th:src="@{/posts.js}"></script>
 
 </body>
 </html>

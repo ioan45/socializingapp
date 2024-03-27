@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,5 +43,10 @@ public class Post {
     public void removeLike(User user) {
         likes.remove(user);
         user.getPostsLiked().remove(this);
+    }
+
+    public void removeAllLikes() {
+        likes.forEach(user -> user.getPostsLiked().remove(this));
+        likes.clear();
     }
 }

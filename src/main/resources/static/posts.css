@@ -11,6 +11,15 @@ body {
 .container {
     max-width: 800px;
     width: 100%;
+    margin-top: 75px;
+}
+.new-post-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 .post {
     background-color: #fff;
@@ -35,7 +44,7 @@ body {
     display: flex;
     align-items: center;
 }
-.like-btn, .comment-btn, .back-button{
+.like-btn, .comment-btn, .back-button, .delete-btn, .post-button{
     background-color: #007BFF;
     color: #FFF;
     margin-right: 10px;
@@ -45,11 +54,20 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.like-btn:hover, .comment-btn:hover, .back-button:hover{
+.like-btn:hover, .comment-btn:hover, .back-button:hover, .delete-btn:hover, .post-button:hover{
     background-color: #0056B3;
 }
 .back-button {
     margin-bottom: 50px;
+}
+.delete-btn {
+    margin-right: 0 !important;
+    margin-left: 20px;
+}
+.post-button {
+    margin: 0 !important;
+    width: 50%;
+    min-width: 60px;
 }
 .like-btn.liked {
     background-color: #04AA6D;
@@ -66,7 +84,7 @@ body {
     border-left: 3px solid #ccc;
     padding-left: 10px;
 }
-.comment-input {
+.comment-input, .post-textarea {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -76,7 +94,7 @@ body {
     box-sizing: border-box;
     transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-.comment-input:focus {
+.comment-input:focus, .post-textarea:focus {
     border-color: #4A90E2;
     box-shadow: 0 0 8px 0 rgba(74, 144, 226, 0.5);
     outline: none;
