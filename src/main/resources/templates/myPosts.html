@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Social Media Posts</title>
+    <link rel="stylesheet" th:href="@{/posts.css}"/>
+</head>
+<body>
+
+<h1>My Posts</h1>
+
+<div class="container" id="post-form-container">
+    <div class = "new-post-form">
+        <textarea class="post-textarea" rows="5" cols="70"></textarea>
+        <button class="post-button">POST</button>
+    </div>
+</div>
+
+<div class="container" id="post-list-container">
+    <div th:each="post : ${myPosts}" class="post" th:id="${post.postId}">
+        <div class="post-header">
+            <h3 th:text="${post.owner}"></h3>
+            <div>
+                <span th:text="'   [' + ${post.creationDate} + '] '"></span>
+                <button class="delete-btn">Delete</button>
+            </div>
+        </div>
+        <div class="post-content">
+            <p th:text="${post.content}"></p>
+        </div>
+        <div class="post-actions">
+            <button class="like-btn" th:classappend="${post.isLiked()} ? 'liked'" th:text="'Like (' + ${post.likesCount} + ')'"></button>
+            <button class="comment-btn">Comment</button>
+            <input class="comment-input" type="text">
+        </div>
+        <div class="comments">
+            <div th:each="comment : ${post.comments}" class="comment">
+                <span th:text="'[' + ${comment.creationDate} + '] '"></span>
+                <strong th:text="${comment.username} + ' :'"></strong>
+                <span th:text="${comment.content}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form th:action="@{/profile}" method="get">
+    <button class="back-button" type="submit">Back</button>
+</form>
+
+<script th:src="@{/posts.js}"></script>
+
+</body>
+</html>
