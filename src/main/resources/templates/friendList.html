@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend List</title>
+    <link th:href="@{/friendListStyle.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/profile}" class="back-link">Back to Profile</a>
+    <h2>Send Friend Request</h2>
+    <form th:action="@{/friends/sendRequest}" method="post">
+        <input type="text" name="username" placeholder="Enter username" required>
+        <button type="submit" class="styled-button">Send Request</button>
+    </form>
+
+    <div th:if="${successMessage}" class="message success-message" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="message error-message" th:text="${errorMessage}"></div>
+</div>
+<div class="container">
+    <h2>Friend List</h2>
+    <!-- Display friend requests -->
+    <h3>Friend Requests</h3>
+    <ul>
+        <li th:each="request : ${requests}">
+            <div class="friend-container">
+                <span th:text="${request.sender.username}"></span>
+                <div class="friend-button-container">
+                    <form th:action="@{/friends/acceptRequest}" method="post">
+                        <input type="hidden" name="friendshipId" th:value="${request.friendshipId}">
+                        <button type="submit" class="styled-button">Accept</button>
+                    </form>
+                    <form th:action="@{/friends/declineRequest}" method="post">
+                        <input type="hidden" name="friendshipId" th:value="${request.friendshipId}">
+                        <button type="submit" class="styled-button">Decline</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!-- Display friends -->
+    <h3>Friends</h3>
+    <ul>
+        <li th:each="friend : ${friends}">
+            <div class="friend-container">
+                <span th:text="${friend.username}"></span>
+                <div class="friend-button-container">
+                    <a th:href="@{/profile/{username}(username=${friend.username})}" class="styled-button">Visit</a>
+                    <form th:action="@{/friends/deleteFriend}" method="post">
+                        <input type="hidden" name="username" th:value="${friend.username}">
+                        <button type="submit" class="styled-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

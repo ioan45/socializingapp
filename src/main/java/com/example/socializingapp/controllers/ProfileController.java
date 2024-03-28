@@ -63,9 +63,6 @@ public class ProfileController {
     @GetMapping("")
     public String defaultProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/profile/" + authentication.getName();
-        }
-        return "redirect:/";
+        return "redirect:/profile/" + authentication.getName();
     }
 }
