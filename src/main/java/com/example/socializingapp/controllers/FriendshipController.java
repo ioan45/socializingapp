@@ -31,3 +31,4 @@ public class FriendshipController {
         return "redirect:/";
     }
 }
+

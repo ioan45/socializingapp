@@ -18,7 +18,7 @@ public class FriendshipService {
 
     public Friendship sendRequest(User user1, User user2) {
 
-        Friendship friendship = friendshipRepository.findBySenderAndReceiver(user1, user2);
+        Friendship friendship = friendshipRepository.findBySenderAndReceiverCustom(user1, user2);
         if (friendship != null) {
             return null;
         }
@@ -39,18 +39,10 @@ public class FriendshipService {
         friendship.setStatus("accepted");
         friendship.setStatusTimestamp(new Timestamp(System.currentTimeMillis()));
         friendshipRepository.save(friendship);
-
-        Friendship friendship1 = new Friendship();
-        friendship1.setStatus("accepted");
-        friendship1.setSender(friendship.getReceiver());
-        friendship1.setReceiver(friendship.getSender());
-        friendship1.setStatusTimestamp(friendship.getStatusTimestamp());
-
-        friendshipRepository.save(friendship1);
     }
 
     public boolean areFriends(User user1, User user2) {
-        Friendship friendship = friendshipRepository.findBySenderAndReceiver(user1, user2);
+        Friendship friendship = friendshipRepository.findBySenderAndReceiverCustom(user1, user2);
         return friendship != null && friendship.getStatus().equals("accepted");
     }
 }
