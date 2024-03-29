@@ -44,7 +44,7 @@ body {
     display: flex;
     align-items: center;
 }
-.like-btn, .comment-btn, .back-button, .delete-btn, .post-button{
+.like-btn, .comment-btn, .back-button, .delete-btn, .post-button, .page-number, .prev-page-button, .next-page-button{
     background-color: #007BFF;
     color: #FFF;
     margin-right: 10px;
@@ -54,11 +54,12 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.like-btn:hover, .comment-btn:hover, .back-button:hover, .delete-btn:hover, .post-button:hover{
+.like-btn:hover, .comment-btn:hover, .back-button:hover, .delete-btn:hover, .post-button:hover, .prev-page-button:hover, .next-page-button:hover{
     background-color: #0056B3;
 }
-.back-button {
-    margin-bottom: 50px;
+.page-number:disabled, .prev-page-button:disabled, .next-page-button:disabled {
+    background-color: #D0CFCF;
+    color: #000;
 }
 .delete-btn {
     margin-right: 0 !important;
@@ -98,4 +99,12 @@ body {
     border-color: #4A90E2;
     box-shadow: 0 0 8px 0 rgba(74, 144, 226, 0.5);
     outline: none;
+}
+.bottom-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 50px;
 }

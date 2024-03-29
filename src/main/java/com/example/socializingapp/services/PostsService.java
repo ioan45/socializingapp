@@ -1,9 +1,6 @@
 package com.example.socializingapp.services;
 
-import com.example.socializingapp.dto.posts.CommentDto;
-import com.example.socializingapp.dto.posts.CreatePostDto;
-import com.example.socializingapp.dto.posts.LikeDto;
-import com.example.socializingapp.dto.posts.PostDto;
+import com.example.socializingapp.dto.posts.*;
 import com.example.socializingapp.entities.Comment;
 import com.example.socializingapp.entities.Post;
 import com.example.socializingapp.entities.User;
@@ -11,6 +8,10 @@ import com.example.socializingapp.repositories.CommentRepository;
 import com.example.socializingapp.repositories.PostRepository;
 import com.example.socializingapp.repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +33,17 @@ public class PostsService {
         this.userRepository = userRepository;
     }
 
-    public List<PostDto> getPosts(boolean friendsPosts) {
-        List<PostDto> result = new ArrayList<>();
+    public GetPostsResult getPosts(boolean friendsPosts, int pageIndex) {
+        final int PAGE_SIZE = 5;
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username).orElse(null);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        List<Post> posts = (friendsPosts ? postRepository.getFriendsPosts(username) : postRepository.getMyPosts(username));
-        for(Post post : posts) {
+        Pageable pageQuery = PageRequest.of(pageIndex, PAGE_SIZE, Sort.by("timestamp").descending());
+        Page<Post> posts = (friendsPosts ? postRepository.getFriendsPosts(username, pageQuery) : postRepository.getMyPosts(username, pageQuery));
+
+        List<PostDto> resultedDtos = new ArrayList<>();
+        for(Post post : posts.getContent()) {
             boolean isLiked = post.getLikes().contains(user);
             String date = dateFormat.format(post.getTimestamp());
 
@@ -50,9 +54,9 @@ public class PostsService {
                 commentDtos.add(new CommentDto(0, comment.getUser().getUsername(), comment.getContent(), commentDate));
             }
 
-            result.add(new PostDto(post.getPostId(), post.getUser().getUsername(), post.getContent(), post.getLikesCount(), isLiked, date, commentDtos));
+            resultedDtos.add(new PostDto(post.getPostId(), post.getUser().getUsername(), post.getContent(), post.getLikesCount(), isLiked, date, commentDtos));
         }
-        return result;
+        return new GetPostsResult(resultedDtos, pageIndex + 1, posts.getTotalPages());
     }
 
     public void toggleLike(LikeDto like) {
