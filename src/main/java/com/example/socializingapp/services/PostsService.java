@@ -81,7 +81,7 @@ public class PostsService {
         User user = userRepository.findByUsername(username).orElse(null);
         Post post = postRepository.findById(comment.getPostId()).orElse(null);
         if (user != null && post != null) {
-            Timestamp commentDate = new Timestamp(Long.parseLong(comment.getCreationDate()));
+            Timestamp commentDate = new Timestamp(System.currentTimeMillis());
             Comment newComment = new Comment(0, post, user, comment.getContent(), commentDate);
             commentRepository.save(newComment);
         }
@@ -107,7 +107,7 @@ public class PostsService {
         Post newPost = new Post();
         newPost.setUser(user);
         newPost.setContent(payload.getContent());
-        newPost.setTimestamp(new Timestamp(payload.getCreationTime()));
+        newPost.setTimestamp(new Timestamp(System.currentTimeMillis()));
         postRepository.save(newPost);
     }
 }

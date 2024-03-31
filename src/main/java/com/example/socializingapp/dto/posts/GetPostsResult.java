@@ -12,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 public class GetPostsResult {
+    // Used just for responses.
+
     private List<PostDto> posts;
     private int currentPage;
     private int totalPages;

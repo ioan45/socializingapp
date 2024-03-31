@@ -1,5 +1,7 @@
 package com.example.socializingapp.services;
 
+import com.example.socializingapp.dto.users.UserDto;
+import com.example.socializingapp.dto.users.UsersDtoMapper;
 import com.example.socializingapp.entities.Profile;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.repositories.UserRepository;
@@ -10,15 +12,18 @@ import java.sql.Timestamp;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private final ProfileService profileService;
+    private final UsersDtoMapper usersDtoMapper;
 
-    public UserService(UserRepository userRepository, ProfileService profileService) {
+    public UserService(UserRepository userRepository, ProfileService profileService, UsersDtoMapper usersDtoMapper) {
         this.userRepository = userRepository;
         this.profileService = profileService;
+        this.usersDtoMapper = usersDtoMapper;
     }
 
-    public boolean signUpUser(User user) {
+    public boolean signUpUser(UserDto userDto) {
+        User user = usersDtoMapper.fromDto(userDto);
         boolean userExists = userRepository.existsByUsername(user.getUsername());
         if (!userExists) {
             BCryptPasswordEncoder bc = new BCryptPasswordEncoder();

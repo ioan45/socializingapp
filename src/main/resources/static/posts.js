@@ -39,12 +39,11 @@ function postComment(postId, commentButton) {
         return;
 
     // Send the comment to backend server
-    const currentTime = Date.now();
     const postData = {
         postId: postId,
         username: "",
         content: inputElem.value,
-        creationDate: currentTime
+        creationDate: ""
     };
     fetch("http://localhost:8080/post/comment", {
         method: 'POST',
@@ -59,7 +58,7 @@ function postComment(postId, commentButton) {
         let commentDiv = document.createElement('div');
         commentDiv.className = 'comment';
         commentDiv.innerHTML = "" +
-            "<span>[" + getTimeFormatted(currentTime) + "] </span>" +
+            "<span>[" + getTimeFormatted(Date.now()) + "] </span>" +
             "<strong>" + responseTxt + " : </strong>" +
             "<span>" + inputElem.value + "</span>";
         inputElem.parentElement.parentElement.querySelector('.comments').appendChild(commentDiv);
@@ -86,8 +85,7 @@ function createPost(textAreaElem) {
 
     // Send the create request to the backend server
     const postData = {
-        content: textAreaElem.value,
-        creationTime: Date.now()
+        content: textAreaElem.value
     };
     fetch("http://localhost:8080/post/create", {
         method: 'POST',

@@ -1,14 +1,18 @@
 package com.example.socializingapp.controllers;
 
+import com.example.socializingapp.dto.users.UserDto;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.UserService;
 import com.sun.tools.jconsole.JConsoleContext;
+import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +30,9 @@ public class LoginController {
 
 
     @GetMapping("/")
-    public String homePage(Model model) {
+    public String homePage(
+            Model model
+    ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
@@ -50,7 +56,9 @@ public class LoginController {
     }
 
     @GetMapping("/signup")
-    public String signUpPage(Model model) {
+    public String signUpPage(
+            Model model
+    ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
@@ -60,12 +68,23 @@ public class LoginController {
     }
 
     @PostMapping("/signup/submit")
-    public String signUpSubmit(@ModelAttribute("userEntity") User formUser, Model model) {
+    public String signUpSubmit(
+            @ModelAttribute("userEntity") @Valid UserDto formUser,
+            BindingResult bresult,
+            Model model
+    ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
 
         }
+
+        // Message for invalid form field.
+        if (bresult.hasErrors()) {
+            model.addAttribute("invalidSignUp", bresult.getAllErrors().get(0).getDefaultMessage());
+            return "signup";
+        }
+
         boolean succeeded = userService.signUpUser(formUser);
         if (succeeded) {
             return "redirect:/";
