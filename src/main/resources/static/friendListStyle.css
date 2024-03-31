@@ -1,4 +1,3 @@
-/* Reset default browser styles */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, label, input, button {
     margin: 0;
     padding: 0;
@@ -8,19 +7,16 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, labe
     vertical-align: baseline;
 }
 
-/* Set box-sizing to border-box */
 * {
     box-sizing: border-box;
 }
 
-/* Overall container styling */
 .container {
     margin: 0 auto;
     width: 80%;
-    text-align: center; /* Center align the content */
+    text-align: center;
 }
 
-/* Back to profile link styling */
 .back-link {
     display: inline-block;
     padding: 10px 20px;
@@ -36,7 +32,6 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, labe
     background-color: #218838;
 }
 
-/* Heading styling */
 h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -47,7 +42,6 @@ h3 {
     margin-bottom: 5px;
 }
 
-/* Form styling */
 form {
     display: flex;
     align-items: center;
@@ -61,7 +55,6 @@ input[type="text"] {
     border-radius: 5px;
 }
 
-/* Message styling */
 .message {
     margin-bottom: 10px;
 }
@@ -74,11 +67,10 @@ input[type="text"] {
     color: red;
 }
 
-/* Friend container styling */
 .friend-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -88,16 +80,15 @@ input[type="text"] {
 
 .friend-button-container {
     display: flex;
-    align-items: center; /* Center vertically */
+    align-items: center;
     margin-bottom: 10px;
 }
 
 .friend-button-container > * {
     margin-left: 10px;
-    vertical-align: middle; /* Align elements vertically */
+    vertical-align: middle;
 }
 
-/* Button styling */
 .styled-button {
     padding: 10px 20px;
     background-color: #28a745;
@@ -113,7 +104,6 @@ input[type="text"] {
     background-color: #218838;
 }
 
-/* Center align friend requests and friends lists */
 ul {
     list-style-type: none;
     padding: 0;

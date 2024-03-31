@@ -48,7 +48,7 @@
                     <a th:href="@{/profile/{username}(username=${friend.username})}" class="styled-button">Visit</a>
                     <form th:action="@{/friends/deleteFriend}" method="post">
                         <input type="hidden" name="username" th:value="${friend.username}">
-                        <button type="submit" class="styled-button">Delete</button>
+                        <button type="submit" class="styled-button">Unfriend</button>
                     </form>
                 </div>
             </div>
