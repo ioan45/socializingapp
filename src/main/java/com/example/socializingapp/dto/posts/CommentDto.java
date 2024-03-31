@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -15,6 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class CommentDto {
     // The Dto is used for both the requests and responses.
     // The fields used for requests are annotated.

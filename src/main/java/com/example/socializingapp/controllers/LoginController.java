@@ -3,16 +3,15 @@ package com.example.socializingapp.controllers;
 import com.example.socializingapp.dto.users.UserDto;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.UserService;
-import com.sun.tools.jconsole.JConsoleContext;
 import jakarta.validation.Valid;
-import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
+    private final Logger logger;
     private UserService userService;
 
     public LoginController(UserService userService) {
+        this.logger = LoggerFactory.getLogger(LoginController.class);
         this.userService = userService;
     }
 
@@ -73,6 +74,7 @@ public class LoginController {
             BindingResult bresult,
             Model model
     ) {
+        logger.info("Submitted a sign up form! Data: " + formUser.toString());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
