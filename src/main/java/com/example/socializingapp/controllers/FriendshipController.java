@@ -1,5 +1,6 @@
 package com.example.socializingapp.controllers;
 
+import com.example.socializingapp.dto.friends.FriendDto;
 import com.example.socializingapp.entities.Friendship;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.FriendshipService;
@@ -30,7 +31,7 @@ public class FriendshipController {
     public String showFriends(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getUserByUsername(authentication.getName());
-        List<User> friends = friendshipService.getAllFriendsByUser(currentUser);
+        List<FriendDto> friends = friendshipService.getAllFriendsByUser(currentUser);
         List<Friendship> requests = friendshipService.getAllRequestsByUser(currentUser);
 
         model.addAttribute("friends", friends);
@@ -46,6 +47,10 @@ public class FriendshipController {
         User receiver = userService.getUserByUsername(username);
         if (receiver == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "User does not exist!");
+            return "redirect:/friends";
+        }
+        if (receiver.getUsername().equals(sender.getUsername())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Can't send request to yourself!");
             return "redirect:/friends";
         }
         boolean requestSent = friendshipService.sendRequest(sender, receiver);

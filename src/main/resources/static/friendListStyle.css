@@ -1,10 +1,8 @@
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, label, input, button {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FEFCE7;
     margin: 0;
     padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
 }
 
 * {
@@ -12,15 +10,19 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, labe
 }
 
 .container {
-    margin: 0 auto;
-    width: 80%;
+    margin: 10px auto auto;
+    width: 50%;
+    min-width: 370px;
     text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 10px;
 }
 
 .back-link {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #007BFF;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -29,7 +31,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li, form, labe
 }
 
 .back-link:hover {
-    background-color: #218838;
+    background-color: #0056B3;
 }
 
 h2 {
@@ -91,7 +93,7 @@ input[type="text"] {
 
 .styled-button {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #007BFF;
     color: #fff;
     text-decoration: none;
     border: none;
@@ -101,7 +103,7 @@ input[type="text"] {
 }
 
 .styled-button:hover {
-    background-color: #218838;
+    background-color: #0056B3;
 }
 
 ul {
@@ -111,4 +113,8 @@ ul {
 
 ul li {
     text-align: left;
+}
+
+.bold-username {
+    font-weight: bold;
 }

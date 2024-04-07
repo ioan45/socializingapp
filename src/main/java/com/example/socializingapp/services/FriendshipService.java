@@ -1,6 +1,8 @@
 package com.example.socializingapp.services;
 
+import com.example.socializingapp.dto.friends.FriendDto;
 import com.example.socializingapp.entities.Friendship;
+import com.example.socializingapp.entities.Message;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.repositories.FriendshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class FriendshipService {
         friendship.setReceiver(user2);
         friendship.setStatus("pending");
         friendship.setStatusTimestamp(new Timestamp(System.currentTimeMillis()));
+        friendship.setNewMessage(false);
         friendshipRepository.save(friendship);
 
         return true;
@@ -58,17 +61,22 @@ public class FriendshipService {
         return friendship != null && friendship.getStatus().equals("accepted");
     }
 
-    public List<User> getAllFriendsByUser(User user) {
+    public List<FriendDto> getAllFriendsByUser(User user) {
         List<Friendship> friendships = friendshipRepository.findAcceptedFriendsByUser(user);
-        List<User> friends = new ArrayList<User>();
+        List<FriendDto> friends = new ArrayList<FriendDto>();
         for (Friendship friendship : friendships) {
             User sender = friendship.getSender(), receiver = friendship.getReceiver();
+            FriendDto friendDto = new FriendDto();
+            friendDto.setBold(false);
             if (sender.getUserId() == user.getUserId()) {
-                friends.add(receiver);
+                friendDto.setUsername(receiver.getUsername());
+            } else if (receiver.getUserId() == user.getUserId()) {
+                friendDto.setUsername(sender.getUsername());
             }
-            else if (receiver.getUserId() == user.getUserId()) {
-                friends.add(sender);
+            if (friendship.getLastSender() != null && !friendship.getLastSender().equals(user.getUsername()) && friendship.getNewMessage()) {
+                friendDto.setBold(true);
             }
+            friends.add(friendDto);
         }
         return friends;
     }
@@ -79,5 +87,28 @@ public class FriendshipService {
 
     public void deleteFriend(User user1, User user2) {
         friendshipRepository.deleteFriendshipByUsers(user1, user2);
+    }
+
+    public void newMessageSent(Message message) {
+        Friendship friendship = friendshipRepository.findBySenderAndReceiverCustom(message.getSender(), message.getReceiver());
+        if (friendship == null) {
+            return;
+        }
+        friendship.setLastSender(message.getSender().getUsername());
+        friendship.setLastMessageTimestamp(message.getTimestamp());
+        friendship.setNewMessage(true);
+
+        friendshipRepository.save(friendship);
+    }
+
+    public void readLastMessage(Message message) {
+        Friendship friendship = friendshipRepository.findBySenderAndReceiverCustom(message.getSender(), message.getReceiver());
+        if (friendship == null) {
+            return;
+        }
+
+        friendship.setNewMessage(false);
+
+        friendshipRepository.save(friendship);
     }
 }
