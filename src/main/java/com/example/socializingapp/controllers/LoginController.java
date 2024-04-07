@@ -1,14 +1,17 @@
 package com.example.socializingapp.controllers;
 
+import com.example.socializingapp.dto.users.UserDto;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.UserService;
-import com.sun.tools.jconsole.JConsoleContext;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +20,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
+    private final Logger logger;
     private UserService userService;
 
     public LoginController(UserService userService) {
+        this.logger = LoggerFactory.getLogger(LoginController.class);
         this.userService = userService;
     }
 
 
 
     @GetMapping("/")
-    public String homePage(Model model) {
+    public String homePage(
+            Model model
+    ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
@@ -50,7 +57,9 @@ public class LoginController {
     }
 
     @GetMapping("/signup")
-    public String signUpPage(Model model) {
+    public String signUpPage(
+            Model model
+    ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
@@ -60,12 +69,24 @@ public class LoginController {
     }
 
     @PostMapping("/signup/submit")
-    public String signUpSubmit(@ModelAttribute("userEntity") User formUser, Model model) {
+    public String signUpSubmit(
+            @ModelAttribute("userEntity") @Valid UserDto formUser,
+            BindingResult bresult,
+            Model model
+    ) {
+        logger.info("Submitted a sign up form! Data: " + formUser.toString());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/profile";
 
         }
+
+        // Message for invalid form field.
+        if (bresult.hasErrors()) {
+            model.addAttribute("invalidSignUp", bresult.getAllErrors().get(0).getDefaultMessage());
+            return "signup";
+        }
+
         boolean succeeded = userService.signUpUser(formUser);
         if (succeeded) {
             return "redirect:/";

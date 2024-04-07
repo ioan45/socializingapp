@@ -14,6 +14,8 @@ import java.util.List;
 @Setter
 @Getter
 public class PostDto {
+    // Used just for responses.
+
     private int postId;
     private String owner;
     private String content;

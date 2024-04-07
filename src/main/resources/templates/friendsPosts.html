@@ -34,9 +34,20 @@
     </div>
 </div>
 
-<form th:action="@{/profile}" method="get">
-    <button class="back-button" type="submit">Back</button>
-</form>
+<div class="bottom-navigation">
+    <form th:action="@{/profile}" method="get">
+        <button class="back-button" type="submit">To Profile</button>
+    </form>
+    <form th:action="@{/friendsposts}" method="get">
+        <input type="hidden" name="page" th:value="${prevPageNumber}" />
+        <button class="prev-page-button" type="submit" th:disabled="${prevPageNumber < 1}"> < </button>
+    </form>
+    <button class="page-number" th:text="${nextPageNumber - 1}" disabled></button>
+    <form th:action="@{/friendsposts}" method="get">
+        <input type="hidden" name="page" th:value="${nextPageNumber}" />
+        <button class="next-page-button" type="submit" th:disabled="${nextPageNumber > pagesCount}"> > </button>
+    </form>
+</div>
 
 <script th:src="@{posts.js}"></script>
 
