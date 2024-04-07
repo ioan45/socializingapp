@@ -18,12 +18,14 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Integer>
 
     @Query("SELECT f " +
             "FROM Friendship f " +
-            "WHERE (f.sender = :user OR f.receiver = :user) AND f.status = 'accepted'")
+            "WHERE (f.sender = :user OR f.receiver = :user) AND f.status = 'accepted' " +
+            "ORDER BY f.lastMessageTimestamp DESC")
     List<Friendship> findAcceptedFriendsByUser(User user);
 
     @Query("SELECT f " +
             "FROM Friendship f " +
-            "WHERE f.receiver = :user AND f.status = 'pending'")
+            "WHERE f.receiver = :user AND f.status = 'pending' " +
+            "ORDER BY f.statusTimestamp DESC")
     List<Friendship> findPendingRequestsByUser(User user);
 
     @Transactional

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
@@ -29,4 +30,8 @@ public class Friendship {
 
     private String status;
     private Timestamp statusTimestamp;
+
+    private Boolean newMessage;
+    private Timestamp lastMessageTimestamp;
+    private String lastSender;
 }

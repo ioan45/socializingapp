@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <link th:href="@{/message.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h1>Now chatting with <span th:text="${friend}"></span></h1>
+    <a th:href="@{/friends}" class="nav-button">Back</a>
+    <div class="message-container" id="message-container">
+        <div class="message-list" id="message-list">
+            <!-- Messages will be displayed here -->
+            <div th:each="message : ${messageList}" class="message-item" th:classappend="${message.sender.username == loggedInUser} ? 'right' : 'left'">
+                <span th:text="${message.sender.username} + ': ' + ${message.content}"></span>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{/message/send}" method="post">
+        <div class="message-input">
+            <textarea id="message-text" name="messageText" placeholder="Type your message here..." required></textarea>
+            <button type="submit" id="send-button">Send</button>
+            <input type="hidden" name="sender" th:value="${loggedInUser}" />
+            <input type="hidden" name="reciever" th:value="${friend}" />
+        </div>
+    </form>
+</div>
+<script>
+    // Scroll the message list to the bottom
+    var messageContainer = document.getElementById("message-container");
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+</script>
+</body>
+</html>

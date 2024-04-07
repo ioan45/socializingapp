@@ -29,4 +29,5 @@ public class Message {
 
     private String content;
     private Timestamp timestamp;
+//    private Boolean seen;
 }

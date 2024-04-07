@@ -16,13 +16,15 @@
 
     <div th:if="${successMessage}" class="message success-message" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" class="message error-message" th:text="${errorMessage}"></div>
-</div>
-<div class="container">
-    <h2>Friend List</h2>
-    <!-- Display friend requests -->
+
     <h3>Friend Requests</h3>
     <ul>
-        <li th:each="request : ${requests}">
+        <li th:if="${#lists.isEmpty(requests)}">
+            <div class="friend-container">
+                <span>No friend requests</span>
+            </div>
+        </li>
+        <li th:each="request : ${requests}" th:if="${not #lists.isEmpty(requests)}">
             <div class="friend-container">
                 <span th:text="${request.sender.username}"></span>
                 <div class="friend-button-container">
@@ -38,17 +40,22 @@
             </div>
         </li>
     </ul>
-    <!-- Display friends -->
     <h3>Friends</h3>
     <ul>
-        <li th:each="friend : ${friends}">
+        <li th:if="${#lists.isEmpty(friends)}">
             <div class="friend-container">
-                <span th:text="${friend.username}"></span>
+                <span>No friends</span>
+            </div>
+        </li>
+        <li th:each="friend : ${friends}" th:if="${not #lists.isEmpty(friends)}">
+            <div class="friend-container">
+                <span th:text="${friend.username}" th:class="${friend.bold ? 'bold-username' : ''}"></span>
                 <div class="friend-button-container">
                     <a th:href="@{/profile/{username}(username=${friend.username})}" class="styled-button">Visit</a>
+                    <a th:href="@{/message/{username}(username=${friend.username})}" class="styled-button">Message</a>
                     <form th:action="@{/friends/deleteFriend}" method="post">
                         <input type="hidden" name="username" th:value="${friend.username}">
-                        <button type="submit" class="styled-button">Delete</button>
+                        <button type="submit" class="styled-button">Unfriend</button>
                     </form>
                 </div>
             </div>
