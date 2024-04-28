@@ -11,9 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/profile")
@@ -54,7 +57,7 @@ public class ProfileController {
         }
 
         Profile profileLoggedIn = profileService.getProfileByUsername(authentication.getName());
-        if(friendshipService.areFriends(profileLoggedIn.getUser(), profile.getUser())) {
+        if(friendshipService.areFriends(authentication.getName(), profile.getUser().getUsername())) {
             return "friendProfile";
         }
 
@@ -65,4 +68,21 @@ public class ProfileController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return "redirect:/profile/" + authentication.getName();
     }
+
+    @GetMapping("/edit")
+    public String showEditProfile(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Profile profile = profileService.getProfileByUsername(username);
+        model.addAttribute("profile", profile);
+        return "editProfile";
+    }
+
+    @PostMapping("/edit")
+    public String editProfile(@ModelAttribute("profile") Profile profile) {
+        profileService.saveProfile(profile);
+
+        return "redirect:/profile";
+    }
+
 }

@@ -53,7 +53,7 @@ public class UserServiceTest {
         // Assert
 
         verify(userRepository, times(1)).save(any(User.class));
-        verify(profileService, times(1)).createProfile(any(Profile.class));
+        verify(profileService, times(1)).createProfile(any(String.class));
         assertTrue(result);
     }
 

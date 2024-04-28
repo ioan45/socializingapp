@@ -7,6 +7,8 @@ import com.example.socializingapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 public class ProfileService {
 
@@ -23,7 +25,13 @@ public class ProfileService {
         return profileRepository.findByUserUserId(userId);
     }
 
-    public void createProfile(Profile profile) {
+    public void createProfile(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user == null) return;
+
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profile.setCreationDate(new Timestamp(System.currentTimeMillis()));
         profileRepository.save(profile);
     }
 
@@ -33,5 +41,9 @@ public class ProfileService {
             return getProfileByUserId(user.getUserId());
         }
         return null;
+    }
+
+    public void saveProfile(Profile profile) {
+        profileRepository.save(profile);
     }
 }

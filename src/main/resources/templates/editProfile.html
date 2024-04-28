@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link th:href="@{/editProfile.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1>Edit Profile</h1>
+    <form th:action="@{/profile/edit}" method="post" th:object="${profile}">
+        <input type="hidden" th:field="*{profileId}">
+        <input type="hidden" th:field="*{user}">
+        <input type="hidden" th:field="*{creationDate}">
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" th:field="*{description}" rows="4" cols="50"></textarea>
+        </div>
+        <div>
+            <label for="website">Website:</label>
+            <input type="text" id="website" name="website" th:field="*{website}" />
+        </div>
+        <div>
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" th:field="*{birthday}" />
+        </div>
+        <div>
+            <button type="submit">Save Changes</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
