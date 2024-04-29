@@ -4,26 +4,37 @@
     <meta charset="UTF-8">
     <title>Edit Profile</title>
     <link th:href="@{/editProfile.css}" rel="stylesheet" />
+    <style>
+        .error {
+            color: red;
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h1>Edit Profile</h1>
     <form th:action="@{/profile/edit}" method="post" th:object="${profile}">
-        <input type="hidden" th:field="*{profileId}">
-        <input type="hidden" th:field="*{user}">
-        <input type="hidden" th:field="*{creationDate}">
+        <input type="hidden" th:field="*{username}">
+
         <div>
             <label for="description">Description:</label>
             <textarea id="description" name="description" th:field="*{description}" rows="4" cols="50"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
         </div>
+
         <div>
             <label for="website">Website:</label>
             <input type="text" id="website" name="website" th:field="*{website}" />
+            <p th:if="${#fields.hasErrors('website')}" th:errors="*{website}" class="error"></p>
         </div>
+
         <div>
             <label for="birthday">Birthday:</label>
             <input type="date" id="birthday" name="birthday" th:field="*{birthday}" />
+            <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" class="error"></p>
         </div>
+
         <div>
             <button type="submit">Save Changes</button>
         </div>
