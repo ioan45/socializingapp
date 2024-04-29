@@ -4,6 +4,8 @@ import com.example.socializingapp.dto.message.MessageDto;
 import com.example.socializingapp.entities.Message;
 import com.example.socializingapp.repositories.MessageRepository;
 import com.example.socializingapp.services.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,8 +19,10 @@ import java.util.List;
 @RequestMapping("/message")
 public class MessageController {
     private final MessageService messageService;
+    private Logger logger;
     @Autowired
     public MessageController(MessageService messageService) {
+        this.logger = LoggerFactory.getLogger(MessageController.class);
         this.messageService = messageService;
     }
 
@@ -33,6 +37,8 @@ public class MessageController {
         model.addAttribute("loggedInUser", username);
         model.addAttribute("friend", friendName);
 
+        logger.info("User [" + username + "] accessed chat with friend [" + friendName + "]");
+
         return "messagePage";
     }
 
@@ -42,6 +48,7 @@ public class MessageController {
                               @RequestParam("messageText") String content) {
 
         messageService.sendMessage(sender, receiver, content);
+        logger.info("User [" + sender + "] sent message to friend [" + receiver + "]");
 
         return "redirect:/message/" + receiver;
     }
