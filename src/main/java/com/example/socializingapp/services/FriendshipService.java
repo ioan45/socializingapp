@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -73,37 +74,45 @@ public class FriendshipService {
 
     public List<FriendDto> getAllFriendsByUser(String username) {
         User user = userService.getUserByUsername(username);
+        if (user == null) return Collections.emptyList();
+
         List<Friendship> friendships = friendshipRepository.findAcceptedFriendsByUser(user);
         List<FriendDto> friends = new ArrayList<FriendDto>();
         for (Friendship friendship : friendships) {
             User sender = friendship.getSender(), receiver = friendship.getReceiver();
-            FriendDto friendDto = new FriendDto();
-            friendDto.setBold(false);
-            if (sender.getUserId() == user.getUserId()) {
-                friendDto.setUsername(receiver.getUsername());
-            } else if (receiver.getUserId() == user.getUserId()) {
-                friendDto.setUsername(sender.getUsername());
+            if (sender != null && receiver != null) {
+                FriendDto friendDto = new FriendDto();
+                friendDto.setBold(false);
+                if (sender.getUserId() == user.getUserId()) {
+                    friendDto.setUsername(receiver.getUsername());
+                } else if (receiver.getUserId() == user.getUserId()) {
+                    friendDto.setUsername(sender.getUsername());
+                }
+                if (friendship.getLastSender() != null && !friendship.getLastSender().equals(user.getUsername()) && friendship.getNewMessage()) {
+                    friendDto.setBold(true);
+                }
+                friends.add(friendDto);
             }
-            if (friendship.getLastSender() != null && !friendship.getLastSender().equals(user.getUsername()) && friendship.getNewMessage()) {
-                friendDto.setBold(true);
-            }
-            friends.add(friendDto);
         }
         return friends;
     }
 
     public List<RequestDto> getAllRequestsByUser(String username) {
         User user = userService.getUserByUsername(username);
+        if (user == null) return Collections.emptyList();
         List<Friendship> friendshipList = friendshipRepository.findPendingRequestsByUser(user);
 
         List<RequestDto> requestDtoList = new ArrayList<>();
 
         for (Friendship friendship : friendshipList) {
-            RequestDto requestDto = new RequestDto();
-            requestDto.setFriendshipId(friendship.getFriendshipId());
-            requestDto.setSenderUsername(friendship.getSender().getUsername());
+            User sender = friendship.getSender();
+            if (sender != null) {
+                RequestDto requestDto = new RequestDto();
+                requestDto.setFriendshipId(friendship.getFriendshipId());
+                requestDto.setSenderUsername(friendship.getSender().getUsername());
 
-            requestDtoList.add(requestDto);
+                requestDtoList.add(requestDto);
+            }
         }
 
         return requestDtoList;

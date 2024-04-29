@@ -38,7 +38,7 @@ public class MessageController {
 
     @PostMapping("/send")
     public String sendMessage(@RequestParam("sender") String sender,
-                              @RequestParam("reciever") String receiver,
+                              @RequestParam("receiver") String receiver,
                               @RequestParam("messageText") String content) {
 
         messageService.sendMessage(sender, receiver, content);
