@@ -181,3 +181,77 @@
 2024-04-29T00:34:18.602+03:00  INFO 1880 --- [socializingapp] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-04-29T00:34:18.604+03:00  INFO 1880 --- [socializingapp] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-04-29T00:34:18.611+03:00  INFO 1880 --- [socializingapp] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-29T15:07:38.384+03:00  INFO 12716 --- [socializingapp] [main] c.e.s.SocializingappApplication          : Starting SocializingappApplication using Java 22 with PID 12716 (D:\Facultate info\Master IS\An 1\sem 2\Aplicatii web pentru baze de date\socializingapp\target\classes started by mihai in D:\Facultate info\Master IS\An 1\sem 2\Aplicatii web pentru baze de date\socializingapp)
+2024-04-29T15:07:38.386+03:00  INFO 12716 --- [socializingapp] [main] c.e.s.SocializingappApplication          : The following 1 profile is active: "mysql"
+2024-04-29T15:07:39.112+03:00  INFO 12716 --- [socializingapp] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-29T15:07:39.179+03:00  INFO 12716 --- [socializingapp] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 6 JPA repository interfaces.
+2024-04-29T15:07:39.730+03:00  INFO 12716 --- [socializingapp] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-04-29T15:07:39.742+03:00  INFO 12716 --- [socializingapp] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-29T15:07:39.742+03:00  INFO 12716 --- [socializingapp] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-29T15:07:39.796+03:00  INFO 12716 --- [socializingapp] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-29T15:07:39.796+03:00  INFO 12716 --- [socializingapp] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1368 ms
+2024-04-29T15:07:39.940+03:00  INFO 12716 --- [socializingapp] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-29T15:07:40.009+03:00  INFO 12716 --- [socializingapp] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-29T15:07:40.045+03:00  INFO 12716 --- [socializingapp] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-29T15:07:40.289+03:00  INFO 12716 --- [socializingapp] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-29T15:07:40.316+03:00  INFO 12716 --- [socializingapp] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-29T15:07:40.713+03:00  INFO 12716 --- [socializingapp] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@18bb1b88
+2024-04-29T15:07:40.714+03:00  INFO 12716 --- [socializingapp] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-29T15:07:41.730+03:00  INFO 12716 --- [socializingapp] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-29T15:07:41.787+03:00  INFO 12716 --- [socializingapp] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-29T15:07:42.022+03:00  INFO 12716 --- [socializingapp] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-04-29T15:07:42.704+03:00  WARN 12716 --- [socializingapp] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-29T15:07:42.966+03:00  INFO 12716 --- [socializingapp] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@c93275f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37711f1a, org.springframework.security.web.context.SecurityContextHolderFilter@6cb6a38c, org.springframework.security.web.header.HeaderWriterFilter@6b37cadf, org.springframework.web.filter.CorsFilter@2182cd7c, org.springframework.security.web.authentication.logout.LogoutFilter@6d487f2b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5d9cd8b7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1933e1dc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@53963f8e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@10939bc1, org.springframework.security.web.access.ExceptionTranslationFilter@54ebd3b4, org.springframework.security.web.access.intercept.AuthorizationFilter@53ce41e7]
+2024-04-29T15:07:43.217+03:00  INFO 12716 --- [socializingapp] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-04-29T15:07:43.224+03:00  INFO 12716 --- [socializingapp] [main] c.e.s.SocializingappApplication          : Started SocializingappApplication in 5.235 seconds (process running for 6.157)
+2024-04-29T15:07:51.664+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-29T15:07:51.664+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-29T15:07:51.665+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-04-29T15:08:02.962+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-9] c.e.s.security.UserDetailsServiceImpl    : Attempted sign in operation for username: test
+2024-04-29T15:08:03.216+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] c.e.s.controllers.ProfileController      : User [test] accessed personal profile
+2024-04-29T15:08:09.776+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.ProfileController      : User [test] accessed the editing page of his profile
+2024-04-29T15:08:13.077+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-7] c.e.s.controllers.ProfileController      : User saved profile changes
+2024-04-29T15:08:13.092+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-9] c.e.s.controllers.ProfileController      : User [test] accessed personal profile
+2024-04-29T15:08:23.501+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-3] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:08:29.691+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-5] c.e.s.controllers.ProfileController      : User [test] accessed friend [test2] profile
+2024-04-29T15:08:31.887+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-8] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:08:34.742+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:35.799+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:36.798+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-5] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:37.807+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-6] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:38.801+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-7] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:39.184+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-8] c.e.s.controllers.MessageController      : User [test] sent message to friend [test2]
+2024-04-29T15:08:39.194+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-9] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:40.235+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-3] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:41.226+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-2] c.e.s.controllers.MessageController      : User [test] accessed chat with friend [test2]
+2024-04-29T15:08:42.125+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:08:47.320+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-8] c.e.s.controllers.ProfileController      : User [test] accessed personal profile
+2024-04-29T15:09:05.112+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.LoginController        : Submitted a sign up form! Data: UserDto(username=test3, email=testEmail3@test3.test3, password=test3parola)
+2024-04-29T15:09:16.049+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-2] c.e.s.controllers.LoginController        : Submitted a sign up form! Data: UserDto(username=test4, email=testEmail4@test4.test4, password=test4parola)
+2024-04-29T15:09:35.166+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-10] c.e.s.security.UserDetailsServiceImpl    : Attempted sign in operation for username: test
+2024-04-29T15:09:35.254+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-3] c.e.s.controllers.ProfileController      : User [test] accessed personal profile
+2024-04-29T15:10:04.895+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.security.UserDetailsServiceImpl    : Attempted sign in operation for username: test3
+2024-04-29T15:10:04.985+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-6] c.e.s.controllers.ProfileController      : User [test3] accessed personal profile
+2024-04-29T15:10:06.433+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-9] c.e.s.controllers.FriendshipController   : User [test3] accessed friends and requests list
+2024-04-29T15:10:08.711+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-3] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:13.992+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-5] c.e.s.controllers.FriendshipController   : User [test3] friend request sent
+2024-04-29T15:10:14.006+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-6] c.e.s.controllers.FriendshipController   : User [test3] accessed friends and requests list
+2024-04-29T15:10:16.004+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-9] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:18.012+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-3] c.e.s.controllers.FriendshipController   : User [test] declined request for friendship [id=2]
+2024-04-29T15:10:18.043+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-2] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:26.802+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-6] c.e.s.controllers.FriendshipController   : User [test] friend request sent
+2024-04-29T15:10:26.817+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-7] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:31.065+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-10] c.e.s.controllers.FriendshipController   : User [test] failed to send friend request. Reason: Request already sent
+2024-04-29T15:10:31.078+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:39.414+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.FriendshipController   : User [test3] accessed friends and requests list
+2024-04-29T15:10:41.779+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-7] c.e.s.controllers.FriendshipController   : User [test3] accepted request for friendship [id=3]
+2024-04-29T15:10:41.807+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-8] c.e.s.controllers.FriendshipController   : User [test3] accessed friends and requests list
+2024-04-29T15:10:53.098+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:10:55.998+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-4] c.e.s.controllers.ProfileController      : User [test] accessed friend [test3] profile
+2024-04-29T15:10:59.001+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-7] c.e.s.controllers.FriendshipController   : User [test] accessed friends and requests list
+2024-04-29T15:11:03.164+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-10] c.e.s.controllers.FriendshipController   : User [test3] removed friend [test]
+2024-04-29T15:11:03.199+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-1] c.e.s.controllers.FriendshipController   : User [test3] accessed friends and requests list
+2024-04-29T15:11:13.851+03:00  INFO 12716 --- [socializingapp] [http-nio-8080-exec-6] c.e.s.controllers.ProfileController      : User [test] accessed personal profile
+2024-04-29T15:11:28.629+03:00  INFO 12716 --- [socializingapp] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-29T15:11:28.631+03:00  INFO 12716 --- [socializingapp] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-29T15:11:28.636+03:00  INFO 12716 --- [socializingapp] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
