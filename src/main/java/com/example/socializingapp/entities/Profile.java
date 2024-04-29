@@ -28,16 +28,4 @@ public class Profile {
     private String website;
     private Date birthday;
     private Timestamp creationDate;
-
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "profileId=" + profileId +
-                ", user=" + user.getUsername() +
-                ", description='" + description + '\'' +
-                ", website='" + website + '\'' +
-                ", birthday=" + birthday +
-                ", creationDate=" + creationDate +
-                '}';
-    }
 }

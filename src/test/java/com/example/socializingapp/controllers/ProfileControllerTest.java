@@ -1,21 +1,18 @@
 package com.example.socializingapp.controllers;
 
-import com.example.socializingapp.entities.Profile;
-import com.example.socializingapp.entities.User;
+import com.example.socializingapp.dto.profiles.ProfileDto;
 import com.example.socializingapp.services.FriendshipService;
 import com.example.socializingapp.services.ProfileService;
-import com.example.socializingapp.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -32,23 +29,19 @@ public class ProfileControllerTest {
     @MockBean
     private ProfileService profileService;
 
-
     @MockBean
     private FriendshipService friendshipService;
 
     @Test
     @WithMockUser(username = "testUser")
     public void testShowProfile() throws Exception {
-        Profile profile = new Profile();
-        User user = new User();
-        user.setUsername("testUser");
-        profile.setUser(user);
-
-        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profile);
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setUsername("testUser");
+        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profileDto);
         Mockito.when(friendshipService.areFriends("testUser", "testUser")).thenReturn(true);
 
         mockMvc.perform(get("/profile/testUser").with(csrf()))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().isOk())
                 .andExpect(view().name("myProfile"))
                 .andExpect(model().attributeExists("profile"));
     }
@@ -56,16 +49,13 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "testUser")
     public void testShowProfileFriend() throws Exception {
-        Profile profile = new Profile();
-        User user = new User();
-        user.setUsername("anotherUser");
-        profile.setUser(user);
-
-        Mockito.when(profileService.getProfileByUsername("anotherUser")).thenReturn(profile);
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setUsername("anotherUser");
+        Mockito.when(profileService.getProfileByUsername("anotherUser")).thenReturn(profileDto);
         Mockito.when(friendshipService.areFriends("testUser", "anotherUser")).thenReturn(true);
 
         mockMvc.perform(get("/profile/anotherUser").with(csrf()))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().isOk())
                 .andExpect(view().name("friendProfile"))
                 .andExpect(model().attributeExists("profile"));
     }
@@ -91,15 +81,12 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "testUser")
     public void testShowEditProfile() throws Exception {
-        Profile profile = new Profile();
-        User user = new User();
-        user.setUsername("testUser");
-        profile.setUser(user);
-
-        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profile);
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setUsername("testUser");
+        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profileDto);
 
         mockMvc.perform(get("/profile/edit").with(csrf()))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().isOk())
                 .andExpect(view().name("editProfile"))
                 .andExpect(model().attributeExists("profile"));
     }
@@ -107,12 +94,9 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "testUser")
     public void testEditProfile() throws Exception {
-        Profile profile = new Profile();
-        User user = new User();
-        user.setUsername("testUser");
-        profile.setUser(user);
-
-        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profile);
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setUsername("testUser");
+        Mockito.when(profileService.getProfileByUsername("testUser")).thenReturn(profileDto);
 
         mockMvc.perform(post("/profile/edit")
                         .param("description", "Test description")
@@ -128,5 +112,4 @@ public class ProfileControllerTest {
                         && savedProfile.getBirthday().equals(Date.valueOf("1990-01-01")))
         );
     }
-
 }

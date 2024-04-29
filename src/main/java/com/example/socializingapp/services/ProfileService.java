@@ -1,5 +1,7 @@
 package com.example.socializingapp.services;
 
+import com.example.socializingapp.dto.profiles.ProfileDto;
+import com.example.socializingapp.dto.profiles.ProfileDtoMapper;
 import com.example.socializingapp.entities.Profile;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.repositories.ProfileRepository;
@@ -15,10 +17,13 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
 
+    private final ProfileDtoMapper profileDtoMapper;
+
     @Autowired
-    public ProfileService(ProfileRepository profileRepository, UserRepository userRepository) {
+    public ProfileService(ProfileRepository profileRepository, UserRepository userRepository, ProfileDtoMapper profileDtoMapper) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
+        this.profileDtoMapper = profileDtoMapper;
     }
 
     public Profile getProfileByUserId(Integer userId) {
@@ -35,15 +40,23 @@ public class ProfileService {
         profileRepository.save(profile);
     }
 
-    public Profile getProfileByUsername(String username) {
+    public ProfileDto getProfileByUsername(String username) {
         User user = userRepository.findByUsername(username).orElse(null);
         if (user != null) {
-            return getProfileByUserId(user.getUserId());
+            Profile profile = getProfileByUserId(user.getUserId());
+            return profileDtoMapper.getProfileDto(profile);
         }
         return null;
     }
 
-    public void saveProfile(Profile profile) {
+    public void saveProfile(ProfileDto profileDto) {
+        User user = userRepository.findByUsername(profileDto.getUsername()).orElse(null);
+        if (user == null) return;
+
+        Profile profile = getProfileByUserId(user.getUserId());
+        profile.setDescription(profileDto.getDescription());
+        profile.setWebsite(profileDto.getWebsite());
+        profile.setBirthday(profileDto.getBirthday());
         profileRepository.save(profile);
     }
 }
