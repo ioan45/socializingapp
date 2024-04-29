@@ -26,7 +26,7 @@
         </li>
         <li th:each="request : ${requests}" th:if="${not #lists.isEmpty(requests)}">
             <div class="friend-container">
-                <span th:text="${request.sender.username}"></span>
+                <span th:text="${request.senderUsername}"></span>
                 <div class="friend-button-container">
                     <form th:action="@{/friends/acceptRequest}" method="post">
                         <input type="hidden" name="friendshipId" th:value="${request.friendshipId}">

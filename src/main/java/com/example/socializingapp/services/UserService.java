@@ -29,10 +29,8 @@ public class UserService {
             BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
             user.setPassword(bc.encode(user.getPassword()));
             userRepository.save(user);
-            Profile profile = new Profile();
-            profile.setUser(user);
-            profile.setCreationDate(new Timestamp(System.currentTimeMillis()));
-            profileService.createProfile(profile);
+
+            profileService.createProfile(user.getUsername());
         }
         return !userExists;
     }

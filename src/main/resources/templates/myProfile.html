@@ -17,14 +17,13 @@
             <p><strong>Birthday:</strong> <span th:text="${profile.birthday}"></span></p>
             <p><strong>Creation Date:</strong> <span th:text="${profile.creationDate}"></span></p>
         </div>
-        <form th:action="@{/signout}" method="post">
-            <button type="submit">Sign Out</button>
-        </form>
     </div>
     <div class="navigation">
+        <a th:href="@{/profile/edit}"><button class="nav-button">Edit Profile</button></a>
         <a th:href="@{/friends}"><button class="nav-button">Friend List</button></a>
         <a th:href="@{/myposts}"><button class="nav-button">My Posts</button></a>
         <a th:href="@{/friendsposts}"><button class="nav-button">Friends Posts</button></a>
+        <a th:href="@{/signout}"><button class="nav-button">Sign Out</button></a>
     </div>
 </div>
 </body>

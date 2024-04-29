@@ -1,5 +1,6 @@
 package com.example.socializingapp.controllers;
 
+import com.example.socializingapp.dto.message.MessageDto;
 import com.example.socializingapp.entities.Message;
 import com.example.socializingapp.repositories.MessageRepository;
 import com.example.socializingapp.services.MessageService;
@@ -22,11 +23,11 @@ public class MessageController {
     }
 
     @GetMapping("/{friend}")
-    public String showMessage(Model model, @PathVariable("friend") String friendName) {
+    public String showMessages(Model model, @PathVariable("friend") String friendName) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        List<Message> messagesList = messageService.getAllMessages(username, friendName);
+        List<MessageDto> messagesList = messageService.getAllMessages(username, friendName);
         model.addAttribute("messageList", messagesList);
 
         model.addAttribute("loggedInUser", username);

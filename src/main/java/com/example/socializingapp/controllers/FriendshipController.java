@@ -1,6 +1,7 @@
 package com.example.socializingapp.controllers;
 
 import com.example.socializingapp.dto.friends.FriendDto;
+import com.example.socializingapp.dto.friends.RequestDto;
 import com.example.socializingapp.entities.Friendship;
 import com.example.socializingapp.entities.User;
 import com.example.socializingapp.services.FriendshipService;
@@ -30,9 +31,8 @@ public class FriendshipController {
     @GetMapping("")
     public String showFriends(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.getUserByUsername(authentication.getName());
-        List<FriendDto> friends = friendshipService.getAllFriendsByUser(currentUser);
-        List<Friendship> requests = friendshipService.getAllRequestsByUser(currentUser);
+        List<FriendDto> friends = friendshipService.getAllFriendsByUser(authentication.getName());
+        List<RequestDto> requests = friendshipService.getAllRequestsByUser(authentication.getName());
 
         model.addAttribute("friends", friends);
         model.addAttribute("requests", requests);
@@ -41,15 +41,14 @@ public class FriendshipController {
     }
 
     @PostMapping("/sendRequest")
-    public String sendRequest(@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
+    public String sendRequest(@ModelAttribute("username") String receiver, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User sender = userService.getUserByUsername(authentication.getName());
-        User receiver = userService.getUserByUsername(username);
+        String sender = authentication.getName();
         if (receiver == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "User does not exist!");
             return "redirect:/friends";
         }
-        if (receiver.getUsername().equals(sender.getUsername())) {
+        if (receiver.equals(sender)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Can't send request to yourself!");
             return "redirect:/friends";
         }
@@ -77,9 +76,7 @@ public class FriendshipController {
     @PostMapping("/deleteFriend")
     public String deleteFriend(@RequestParam("username") String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.getUserByUsername(authentication.getName());
-        User user = userService.getUserByUsername(username);
-        friendshipService.deleteFriend(currentUser, user);
+        friendshipService.deleteFriend(authentication.getName(), username);
         return "redirect:/friends";
     }
 }

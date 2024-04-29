@@ -1,6 +1,7 @@
 package com.example.socializingapp.services;
 
 import com.example.socializingapp.dto.friends.FriendDto;
+import com.example.socializingapp.dto.friends.RequestDto;
 import com.example.socializingapp.entities.Friendship;
 import com.example.socializingapp.entities.Message;
 import com.example.socializingapp.entities.User;
@@ -15,12 +16,18 @@ import java.util.List;
 @Service
 public class FriendshipService {
     private final FriendshipRepository friendshipRepository;
+    private final UserService userService;
 
-    public FriendshipService(FriendshipRepository friendshipRepository) {
+    public FriendshipService(FriendshipRepository friendshipRepository, UserService userService) {
         this.friendshipRepository = friendshipRepository;
+        this.userService = userService;
     }
 
-    public Boolean sendRequest(User user1, User user2) {
+    public Boolean sendRequest(String username1, String username2) {
+
+        User user1 = userService.getUserByUsername(username1);
+        User user2 = userService.getUserByUsername(username2);
+
         if (user1 == null || user2 == null) {
             return false;
         }
@@ -56,12 +63,16 @@ public class FriendshipService {
         friendshipRepository.delete(friendship);
     }
 
-    public boolean areFriends(User user1, User user2) {
+    public boolean areFriends(String username1, String username2) {
+        User user1 = userService.getUserByUsername(username1);
+        User user2 = userService.getUserByUsername(username2);
+
         Friendship friendship = friendshipRepository.findBySenderAndReceiverCustom(user1, user2);
         return friendship != null && friendship.getStatus().equals("accepted");
     }
 
-    public List<FriendDto> getAllFriendsByUser(User user) {
+    public List<FriendDto> getAllFriendsByUser(String username) {
+        User user = userService.getUserByUsername(username);
         List<Friendship> friendships = friendshipRepository.findAcceptedFriendsByUser(user);
         List<FriendDto> friends = new ArrayList<FriendDto>();
         for (Friendship friendship : friendships) {
@@ -81,11 +92,26 @@ public class FriendshipService {
         return friends;
     }
 
-    public List<Friendship> getAllRequestsByUser(User user) {
-        return friendshipRepository.findPendingRequestsByUser(user);
+    public List<RequestDto> getAllRequestsByUser(String username) {
+        User user = userService.getUserByUsername(username);
+        List<Friendship> friendshipList = friendshipRepository.findPendingRequestsByUser(user);
+
+        List<RequestDto> requestDtoList = new ArrayList<>();
+
+        for (Friendship friendship : friendshipList) {
+            RequestDto requestDto = new RequestDto();
+            requestDto.setFriendshipId(friendship.getFriendshipId());
+            requestDto.setSenderUsername(friendship.getSender().getUsername());
+
+            requestDtoList.add(requestDto);
+        }
+
+        return requestDtoList;
     }
 
-    public void deleteFriend(User user1, User user2) {
+    public void deleteFriend(String username1, String username2) {
+        User user1 = userService.getUserByUsername(username1);
+        User user2 = userService.getUserByUsername(username2);
         friendshipRepository.deleteFriendshipByUsers(user1, user2);
     }
 

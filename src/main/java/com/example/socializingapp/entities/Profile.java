@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -25,6 +26,18 @@ public class Profile {
 
     private String description;
     private String website;
-    private Timestamp birthday;
+    private Date birthday;
     private Timestamp creationDate;
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "profileId=" + profileId +
+                ", user=" + user.getUsername() +
+                ", description='" + description + '\'' +
+                ", website='" + website + '\'' +
+                ", birthday=" + birthday +
+                ", creationDate=" + creationDate +
+                '}';
+    }
 }
