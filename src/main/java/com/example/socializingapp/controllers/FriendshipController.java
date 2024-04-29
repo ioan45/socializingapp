@@ -20,12 +20,10 @@ import java.util.List;
 @RequestMapping("/friends")
 public class FriendshipController {
     private final FriendshipService friendshipService;
-    private final UserService userService;
 
     @Autowired
-    public FriendshipController(FriendshipService friendshipService, UserService userService) {
+    public FriendshipController(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
-        this.userService = userService;
     }
 
     @GetMapping("")

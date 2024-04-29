@@ -22,24 +22,11 @@ import java.util.Date;
 @RequestMapping("/profile")
 public class ProfileController {
     private final ProfileService profileService;
-    private final UserService userService;
     private final FriendshipService friendshipService;
 
-    public ProfileController(ProfileService profileService, UserService userService, FriendshipService friendshipService) {
+    public ProfileController(ProfileService profileService, FriendshipService friendshipService) {
         this.profileService = profileService;
-        this.userService = userService;
         this.friendshipService = friendshipService;
-    }
-
-    private Integer getUserId(@NotNull Authentication authentication) {
-        String username = authentication.getName();
-        System.out.println(username);
-        User user = userService.getUserByUsername(username);
-        if (user != null) {
-            System.out.println(user.getUserId());
-            return user.getUserId();
-        }
-        return null;
     }
 
     @GetMapping("/{username}")
@@ -56,7 +43,6 @@ public class ProfileController {
             return "myProfile";
         }
 
-        Profile profileLoggedIn = profileService.getProfileByUsername(authentication.getName());
         if(friendshipService.areFriends(authentication.getName(), profile.getUser().getUsername())) {
             return "friendProfile";
         }
