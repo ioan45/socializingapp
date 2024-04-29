@@ -71,8 +71,9 @@ public class ProfileController {
 
     @PostMapping("/edit")
     public String editProfile(@ModelAttribute("profile") Profile profile) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         profileService.saveProfile(profile);
-        logger.info("User saved profile changes");
+        logger.info("User [" + authentication.getName() + "] saved profile changes");
         return "redirect:/profile";
     }
 
